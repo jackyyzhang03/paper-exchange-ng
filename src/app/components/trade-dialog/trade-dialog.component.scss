@@ -1,0 +1,23 @@
+mat-form-field {
+  display: block;
+}
+
+.buy-sell-toggle {
+  width: 100%;
+}
+
+mat-button-toggle-group {
+  display: flex;
+}
+
+.buy-sell-toggle-group {
+  width: 100%;
+  justify-content: center;
+  margin-bottom: 4px;
+}
+
+#submit {
+  display: block;
+  margin-left: auto;
+  margin-top: 1em;
+}

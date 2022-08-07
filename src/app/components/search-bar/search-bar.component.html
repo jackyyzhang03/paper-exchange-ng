@@ -1,0 +1,14 @@
+<form (ngSubmit)="search()" [formGroup]="formGroup">
+  <mat-form-field appearance="standard" class="example-full-width">
+
+    <input [matAutocomplete]="auto" formControlName="ticker" matInput placeholder="Search for a symbol" type="text">
+    <mat-autocomplete #auto="matAutocomplete" autoActiveFirstOption>
+      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+        {{option}}
+      </mat-option>
+    </mat-autocomplete>
+    <button mat-icon-button matSuffix type="submit">
+      <mat-icon>search</mat-icon>
+    </button>
+  </mat-form-field>
+</form>

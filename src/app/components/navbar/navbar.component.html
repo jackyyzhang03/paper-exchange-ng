@@ -1,0 +1,16 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <span class="title">PaperExchange</span>
+    <div class="links">
+      <a [routerLink]="['/portfolio']" mat-button>Portfolio</a>
+      <a [routerLink]="['/orders']" mat-button>Pending Orders</a>
+      <a [routerLink]="['/trades']" mat-button>Trade History</a>
+    </div>
+    <app-search-bar></app-search-bar>
+    <span class="example-spacer"></span>
+    <button class="login" mat-icon-button>
+      <a (click)="signOut()" *ngIf="isAuthenticated()" mat-button>Sign Out</a>
+      <a *ngIf="!isAuthenticated()" [routerLink]="['/login']" mat-button>Login</a>
+    </button>
+  </mat-toolbar-row>
+</mat-toolbar>

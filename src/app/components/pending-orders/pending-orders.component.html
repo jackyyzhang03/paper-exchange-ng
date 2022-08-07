@@ -1,0 +1,37 @@
+<mat-card>
+  <mat-card-title>Pending Orders</mat-card-title>
+<table [dataSource]="dataSource" mat-table>
+  <ng-container matColumnDef="symbol">
+    <th *matHeaderCellDef mat-header-cell>Symbol</th>
+    <td *matCellDef="let order" mat-cell> {{order.symbol}} </td>
+  </ng-container>
+  <ng-container matColumnDef="buyOrSell">
+    <th *matHeaderCellDef mat-header-cell>Type</th>
+    <td *matCellDef="let order" mat-cell>{{order.sell ? 'Sell' : 'Buy'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="type">
+    <th *matHeaderCellDef mat-header-cell>Order Type</th>
+    <td *matCellDef="let order" mat-cell>{{order.type | enum | titlecase}} </td>
+  </ng-container>
+  <ng-container matColumnDef="shares">
+    <th *matHeaderCellDef mat-header-cell>Shares</th>
+    <td *matCellDef="let order" mat-cell>{{order.shares}} </td>
+  </ng-container>
+  <ng-container matColumnDef="executionPrice">
+    <th *matHeaderCellDef mat-header-cell>Execution Price</th>
+    <td *matCellDef="let order" mat-cell>{{order.type !== 'MARKET' ? (order.executionPrice | currency) : '-'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="stopLimitPrice">
+    <th *matHeaderCellDef mat-header-cell>Stop Limit Price</th>
+    <td *matCellDef="let order" mat-cell>{{order.type === 'STOP_LIMIT' ? (order.stopLimitPrice | currency) : '-'}} </td>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <th *matHeaderCellDef mat-header-cell>Cancel</th>
+    <td *matCellDef="let order" mat-cell>
+      <button mat-icon-button (click)="deleteOrder(order)"><mat-icon>cancel</mat-icon></button>
+    </td>
+  </ng-container>
+  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+</table>
+</mat-card>

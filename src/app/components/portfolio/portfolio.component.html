@@ -1,0 +1,36 @@
+<mat-card>
+  <mat-card-title>Portfolio</mat-card-title>
+  <table [dataSource]="dataSource" mat-table>
+    <ng-container matColumnDef="symbol">
+      <th *matHeaderCellDef mat-header-cell>Symbol</th>
+      <td *matCellDef="let holding" mat-cell> {{holding.symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="shares">
+      <th *matHeaderCellDef mat-header-cell>Shares</th>
+      <td *matCellDef="let holding" mat-cell>{{holding.shares}} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th *matHeaderCellDef mat-header-cell>Price</th>
+      <td *matCellDef="let holding" mat-cell>{{holding.price | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="bookValue">
+      <th *matHeaderCellDef mat-header-cell>Book Value</th>
+      <td *matCellDef="let holding" mat-cell>{{holding.bookValue | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="marketValue">
+      <th *matHeaderCellDef mat-header-cell>Market Value</th>
+      <td *matCellDef="let holding" mat-cell>{{holding.marketValue | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="gain">
+      <th *matHeaderCellDef mat-header-cell>Gain</th>
+      <td *matCellDef="let holding" mat-cell>{{(holding.marketValue - holding.bookValue) | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="return">
+      <th *matHeaderCellDef mat-header-cell>Return</th>
+      <td *matCellDef="let holding" mat-cell>{{((holding.marketValue - holding.bookValue) /
+        holding.bookValue) | percent:"1.2-2"}} </td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+  </table>
+</mat-card>
