@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { OrderDataSource } from '../../datasources/order.datasource';
 import { OrderService } from '../../services/order.service';
 import { firstValueFrom } from 'rxjs';
+import { PageEvent } from '@angular/material/paginator';
 
 export type Order = {
   id: number;
@@ -28,14 +29,21 @@ export class PendingOrdersComponent implements OnInit {
     'stopLimitPrice',
     'delete'];
 
+  pageSizeOptions = [5, 10, 20];
+
   constructor(
     public dataSource: OrderDataSource, private orderService: OrderService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void { }
 
   deleteOrder(order: Order) {
     firstValueFrom(this.orderService.deleteOrderById(order.id)).
       then(() => this.dataSource.poll());
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.dataSource.pageIndex = event.pageIndex;
+    this.dataSource.pageSize = event.pageSize;
+    this.dataSource.poll();
   }
 }

@@ -45,6 +45,7 @@ import { RegisterComponent } from '../components/register/register.component';
 import {
   EmailVerificationComponent,
 } from '../components/email-verification/email-verification.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -80,6 +81,7 @@ import {
     MatToolbarModule,
     MatListModule,
     MatAutocompleteModule,
+    MatPaginatorModule,
   ],
   providers: [
     {

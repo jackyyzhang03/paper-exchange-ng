@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PortfolioDataSource } from '../../datasources/portfolio.datasource';
+import { PageEvent } from '@angular/material/paginator';
 
 export type Holding = {
   symbol: string;
@@ -24,9 +25,21 @@ export class PortfolioComponent implements OnInit {
     'gain',
     'return'];
 
+  pageSizeOptions = [5, 10, 20];
+
   constructor(public dataSource: PortfolioDataSource) { }
 
   ngOnInit(): void {
-    this.dataSource.loadPortfolio();
+    this.loadPage();
+  }
+
+  handlePageEvent(event: PageEvent) {
+    this.dataSource.pageIndex = event.pageIndex
+    this.dataSource.pageSize = event.pageSize;
+    this.loadPage();
+  }
+
+  loadPage() {
+    this.dataSource.loadPage();
   }
 }

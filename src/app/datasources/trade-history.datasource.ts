@@ -1,23 +1,38 @@
 import { Injectable } from '@angular/core';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Observable, Subject } from 'rxjs';
+import { map, Observable, Subject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Trade } from '../components/trade-history/trade-history.component';
+import { Page } from './portfolio.datasource';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TradeHistoryDataSource implements DataSource<Trade> {
   private subject = new Subject<Trade[]>();
+  private totalElements = 0;
+  public pageIndex = 0;
+  public pageSize = 10;
 
   constructor(private http: HttpClient) { }
 
   connect(collectionViewer: CollectionViewer): Observable<Trade[]> {
-    this.http.get<{ trades: Trade[] }>('http://localhost:8080/trades').
-      subscribe((data) => this.subject.next(data.trades));
+    this.poll();
     return this.subject.asObservable();
   }
 
   disconnect(collectionViewer: CollectionViewer): void {
+  }
+
+  poll() {
+    this.http.get<Page<Trade>>('http://localhost:8080/trades',
+      { params: { page: this.pageIndex, size: this.pageSize } }).pipe(
+      tap((page) => this.totalElements = page.totalElements),
+      map((page) => page.content),
+    ).subscribe((trades) => this.subject.next(trades));
+  }
+
+  length() {
+    return this.totalElements;
   }
 }

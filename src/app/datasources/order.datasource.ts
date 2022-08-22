@@ -2,13 +2,17 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Order } from '../components/pending-orders/pending-orders.component';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, tap } from 'rxjs';
+import { Page } from './portfolio.datasource';
 
 @Injectable({
   providedIn: 'root',
 })
 export class OrderDataSource implements DataSource<Order> {
   private subject = new Subject<Order[]>();
+  private totalElements = 0;
+  public pageIndex = 0;
+  public pageSize = 10;
 
   constructor(private http: HttpClient) { }
 
@@ -21,7 +25,13 @@ export class OrderDataSource implements DataSource<Order> {
   }
 
   poll() {
-    this.http.get<{ orders: Order[] }>('http://localhost:8080/orders').
-      subscribe(data => this.subject.next(data.orders));
+    this.http.get<Page<Order>>('http://localhost:8080/orders',
+      { params: { page: this.pageIndex, size: this.pageSize } }).
+      pipe(tap((page) => this.totalElements = page.totalElements)).
+      subscribe((page) => this.subject.next(page.content));
+  }
+
+  length() {
+    return this.totalElements;
   }
 }

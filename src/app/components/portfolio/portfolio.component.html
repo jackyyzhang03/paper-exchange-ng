@@ -36,4 +36,6 @@
       <td [colSpan]="displayedColumns.length" class="mat-cell">Empty portfolio</td>
     </tr>
   </table>
+  <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
+                 [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)"></mat-paginator>
 </mat-card>

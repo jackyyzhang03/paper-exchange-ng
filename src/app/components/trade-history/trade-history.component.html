@@ -27,4 +27,6 @@
       <td [colSpan]="displayedColumns.length" class="mat-cell">No previous trades</td>
     </tr>
   </table>
+  <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
+                 [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)"></mat-paginator>
 </mat-card>
