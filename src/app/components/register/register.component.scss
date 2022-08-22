@@ -3,7 +3,7 @@ mat-card {
   max-width: 400px;
 }
 
-mat-form-field {
+.block {
   display: block;
 }
 
@@ -11,4 +11,8 @@ mat-form-field {
   width: 100%;
   display: flex;
   column-gap: 1em;
+}
+
+mat-form-field {
+  width: 100%;
 }

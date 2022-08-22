@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Order } from '../components/pending-orders/pending-orders.component';
-import { firstValueFrom, Observable, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -21,8 +21,7 @@ export class OrderDataSource implements DataSource<Order> {
   }
 
   poll() {
-    firstValueFrom(
-      this.http.get<{ orders: Order[] }>('http://localhost:8080/orders')).
-      then(data => this.subject.next(data.orders));
+    this.http.get<{ orders: Order[] }>('http://localhost:8080/orders').
+      subscribe(data => this.subject.next(data.orders));
   }
 }

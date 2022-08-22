@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { TradeHistoryDataSource } from './trade-history.datasource.service';
+import { TradeHistoryDataSource } from './trade-history.datasource';
 
 describe('TradeHistoryDatasourceService', () => {
   let service: TradeHistoryDataSource;

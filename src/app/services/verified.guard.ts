@@ -10,23 +10,19 @@ import { AuthService } from './auth.service';
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate {
+export class VerifiedGuard implements CanActivate {
   constructor(private authService: AuthService, private router: Router) {};
 
   canActivate(
     next: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     const url = '/' + next.url.join('/');
-    const isLoginPage = url === '/login' || url === '/register';
-    const isAuthenticated = this.authService.isAuthenticated();
-    if (isAuthenticated && isLoginPage) {
+    if (!this.authService.isVerified() && url !== '/verify') {
+      this.router.navigateByUrl('/verify');
+      return false;
+    } else if (this.authService.isVerified() && url === '/verify') {
       this.router.navigateByUrl('');
-    } else if (!isAuthenticated && !isLoginPage) {
-      this.authService.setRedirectUrl(url);
-      this.authService.setRedirectQueryParams(next.queryParams);
-      this.router.navigateByUrl('/login');
-    } else {
-      return true;
+      return false;
     }
-    return false;
+    return true;
   }
 }

@@ -14,28 +14,39 @@ import {
   TradeHistoryComponent,
 } from '../components/trade-history/trade-history.component';
 import { AuthGuard } from '../services/auth.guard';
+import { RegisterComponent } from '../components/register/register.component';
+import {
+  EmailVerificationComponent,
+} from '../components/email-verification/email-verification.component';
+import { VerifiedGuard } from '../services/verified.guard';
 
 const routes: Routes = [
-  { path: 'login', component: LoginComponent },
+  { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },
+  { path: 'register', component: RegisterComponent, canActivate: [AuthGuard] },
+  {
+    path: 'verify',
+    component: EmailVerificationComponent,
+    canActivate: [AuthGuard, VerifiedGuard],
+  },
   {
     path: 'ticker/:symbol',
     component: StockDetailsComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, VerifiedGuard],
   },
   {
     path: 'portfolio',
     component: PortfolioComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, VerifiedGuard],
   },
   {
     path: 'orders',
     component: PendingOrdersComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, VerifiedGuard],
   },
   {
     path: 'trades',
     component: TradeHistoryComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, VerifiedGuard],
   },
   { path: '', redirectTo: '/portfolio', pathMatch: 'full' },
   { path: '**', redirectTo: '/portfolio' },

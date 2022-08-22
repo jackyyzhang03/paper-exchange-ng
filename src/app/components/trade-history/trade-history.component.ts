@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {
   TradeHistoryDataSource,
-} from '../../datasources/trade-history.datasource.service';
+} from '../../datasources/trade-history.datasource';
 
 export type Trade = {
   symbol: string;

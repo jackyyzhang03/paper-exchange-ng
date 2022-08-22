@@ -28,12 +28,14 @@ export class PendingOrdersComponent implements OnInit {
     'stopLimitPrice',
     'delete'];
 
-  constructor(public dataSource: OrderDataSource, private orderService: OrderService) { }
+  constructor(
+    public dataSource: OrderDataSource, private orderService: OrderService) { }
 
   ngOnInit(): void {
   }
 
   deleteOrder(order: Order) {
-    firstValueFrom(this.orderService.deleteOrderById(order.id)).then(() => this.dataSource.poll());
+    firstValueFrom(this.orderService.deleteOrderById(order.id)).
+      then(() => this.dataSource.poll());
   }
 }

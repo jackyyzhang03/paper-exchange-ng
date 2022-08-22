@@ -41,11 +41,16 @@ import {
   TradeHistoryComponent,
 } from '../components/trade-history/trade-history.component';
 import { EnumPipe } from '../services/enum.pipe';
+import { RegisterComponent } from '../components/register/register.component';
+import {
+  EmailVerificationComponent,
+} from '../components/email-verification/email-verification.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
+    RegisterComponent,
     StockDetailsComponent,
     TradeDialogComponent,
     PortfolioComponent,
@@ -53,6 +58,7 @@ import { EnumPipe } from '../services/enum.pipe';
     SearchBarComponent,
     PendingOrdersComponent,
     TradeHistoryComponent,
+    EmailVerificationComponent,
     EnumPipe,
   ],
   imports: [

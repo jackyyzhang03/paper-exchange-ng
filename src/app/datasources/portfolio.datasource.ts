@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Holding } from '../components/portfolio/portfolio.component';
-import { firstValueFrom, Observable, ReplaySubject, Subscription } from 'rxjs';
+import { Observable, ReplaySubject, Subscription } from 'rxjs';
 import { PriceService } from '../services/price.service';
 
 @Injectable({
@@ -22,7 +22,7 @@ export class PortfolioDataSource implements DataSource<Holding> {
   }
 
   loadPortfolio() {
-    firstValueFrom(this.getHoldings()).then((data) => {
+    this.getHoldings().subscribe((data) => {
       const symbols: string[] = [];
       this.holdings = data.holdings.map(dto => {
         symbols.push(dto.symbol);
@@ -34,6 +34,8 @@ export class PortfolioDataSource implements DataSource<Holding> {
           price: 0,
         };
       });
+      this.subject.next(this.holdings);
+
       this.priceSubscription = this.priceService.getPrices(symbols).
         subscribe((priceUpdate) => {
           const holding = this.holdings.find(
@@ -56,10 +58,7 @@ export class PortfolioDataSource implements DataSource<Holding> {
   }
 
   getHolding(symbol: string) {
-    return this.http.get<Holding>(`http://localhost:8080/portfolio/holdings/${symbol}`);
+    return this.http.get<Holding>(
+      `http://localhost:8080/portfolio/holdings/${symbol}`);
   }
-}
-
-function shareNumberValidator() {
-
 }

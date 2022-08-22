@@ -6,7 +6,7 @@ import {
   HttpInterceptor,
   HttpRequest,
 } from '@angular/common/http';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, EMPTY, Observable, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 
@@ -26,10 +26,11 @@ export class AuthInterceptor implements HttpInterceptor {
 
     return next.handle(request).pipe(catchError(error => {
       if (error instanceof HttpErrorResponse) {
-        if (error.status == 401) {
-          if (this.router.url !== '/login') {
-            this.authService.logout();
-          }
+        if (error.status === 401 && this.router.url !== '/login') {
+          this.authService.logout();
+        } else if (error.status === 403) {
+          this.router.navigateByUrl('/verify');
+          return EMPTY;
         }
       }
       return throwError(() => error);

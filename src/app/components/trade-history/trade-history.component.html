@@ -1,27 +1,30 @@
 <mat-card>
   <mat-card-title>Trade History</mat-card-title>
-<table [dataSource]="dataSource" mat-table>
-  <ng-container matColumnDef="symbol">
-    <th *matHeaderCellDef mat-header-cell>Symbol</th>
-    <td *matCellDef="let trade" mat-cell> {{trade.symbol}} </td>
-  </ng-container>
-  <ng-container matColumnDef="type">
-    <th *matHeaderCellDef mat-header-cell>Type</th>
-    <td *matCellDef="let trade" mat-cell>{{trade.type | titlecase}} </td>
-  </ng-container>
-  <ng-container matColumnDef="shares">
-    <th *matHeaderCellDef mat-header-cell>Shares</th>
-    <td *matCellDef="let trade" mat-cell>{{trade.shares}} </td>
-  </ng-container>
-  <ng-container matColumnDef="price">
-    <th *matHeaderCellDef mat-header-cell>Price</th>
-    <td *matCellDef="let trade" mat-cell>{{trade.price | currency}} </td>
-  </ng-container>
-  <ng-container matColumnDef="time">
-    <th *matHeaderCellDef mat-header-cell>Time Executed</th>
-    <td *matCellDef="let trade" mat-cell>{{trade.time | date:'medium'}} </td>
-  </ng-container>
-  <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
-  <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
-</table>
+  <table [dataSource]="dataSource" mat-table>
+    <ng-container matColumnDef="symbol">
+      <th *matHeaderCellDef mat-header-cell>Symbol</th>
+      <td *matCellDef="let trade" mat-cell> {{trade.symbol}} </td>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <th *matHeaderCellDef mat-header-cell>Type</th>
+      <td *matCellDef="let trade" mat-cell>{{trade.type | titlecase}} </td>
+    </ng-container>
+    <ng-container matColumnDef="shares">
+      <th *matHeaderCellDef mat-header-cell>Shares</th>
+      <td *matCellDef="let trade" mat-cell>{{trade.shares}} </td>
+    </ng-container>
+    <ng-container matColumnDef="price">
+      <th *matHeaderCellDef mat-header-cell>Price</th>
+      <td *matCellDef="let trade" mat-cell>{{trade.price | currency}} </td>
+    </ng-container>
+    <ng-container matColumnDef="time">
+      <th *matHeaderCellDef mat-header-cell>Time Executed</th>
+      <td *matCellDef="let trade" mat-cell>{{trade.time | date:'medium'}} </td>
+    </ng-container>
+    <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+    <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+    <tr *matNoDataRow class="mat-row">
+      <td [colSpan]="displayedColumns.length" class="mat-cell">No previous trades</td>
+    </tr>
+  </table>
 </mat-card>

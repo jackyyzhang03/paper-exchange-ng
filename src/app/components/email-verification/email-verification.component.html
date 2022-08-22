@@ -1,0 +1,17 @@
+<mat-card *ngIf="success === null">
+  <mat-card-title>Verify your email address</mat-card-title>
+  <p>You must verify your email address in order to use PaperExchange. Please check your email.</p>
+  <button (click)="resend()" color="primary" mat-flat-button>Resend verification email</button>
+</mat-card>
+
+<mat-card *ngIf="success === true">
+  <mat-card-title>Success!</mat-card-title>
+  <p>You email has been successfully verified. You will be redirected to the login page shortly.</p>
+</mat-card>
+
+<mat-card *ngIf="success === false">
+  <mat-card-title>Invalid verification token</mat-card-title>
+  <p>The verification link is invalid or has expired. Click the button below to obtain a new link.</p>
+  <button (click)="resend()" color="primary" mat-flat-button>Resend verification email</button>
+</mat-card>
+

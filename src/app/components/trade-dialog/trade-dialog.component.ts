@@ -26,11 +26,11 @@ type OrderType = {
   styleUrls: ['./trade-dialog.component.scss'],
 })
 export class TradeDialogComponent implements OnInit {
-  types = [
+  types: OrderType[] = [
     { value: 'MARKET', view: 'Market' },
     { value: 'LIMIT', view: 'Limit' },
     { value: 'STOP', view: 'Stop' },
-    { value: 'STOP_LIMIT', view: 'Stop limit' }] as OrderType[];
+    { value: 'STOP_LIMIT', view: 'Stop limit' }];
 
   orderForm = new FormGroup({
     shares: new FormControl(null, [Validators.required]),
@@ -43,6 +43,7 @@ export class TradeDialogComponent implements OnInit {
   });
 
   sharesErrorStateMatcher = new SharesErrorStateMatcher();
+  ownedShares = 0;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) private data: { symbol: string },
@@ -70,8 +71,8 @@ export class TradeDialogComponent implements OnInit {
   ngOnInit(): void {
     firstValueFrom(this.portfolioDataSource.getHolding(this.data.symbol)).
       then((holding => {
-        const ownedShares = holding.shares;
-        this.orderForm.addValidators(shareQuantityValidator(ownedShares));
+        this.ownedShares = holding.shares;
+        this.orderForm.addValidators(shareQuantityValidator(this.ownedShares));
       }));
 
     this.orderForm.controls.type.valueChanges.subscribe((value) => {
@@ -103,8 +104,8 @@ class SharesErrorStateMatcher implements ErrorStateMatcher {
     control: FormControl | null,
     form: FormGroupDirective | NgForm | null): boolean {
     const isSubmitted = form && form.submitted;
-    return !!(control && control.invalid &&
-        (control.dirty || control.touched || isSubmitted)) ||
-      (form && form.errors && form.errors['insufficientShares']);
+    return !!(control && (control.dirty || control.touched || isSubmitted) &&
+      (control.invalid ||
+        (form && form.errors && form.errors['insufficientShares'])));
   }
 }

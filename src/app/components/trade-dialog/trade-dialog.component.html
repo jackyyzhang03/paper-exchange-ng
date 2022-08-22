@@ -6,15 +6,17 @@
 
   <mat-form-field appearance="standard">
     <mat-label>Shares</mat-label>
-    <input formControlName="shares" matInput min="1" step="1" type="number" [errorStateMatcher]="sharesErrorStateMatcher">
+    <input [errorStateMatcher]="sharesErrorStateMatcher" formControlName="shares" matInput min="1" step="1"
+           type="number">
+    <mat-error *ngIf="orderForm.hasError('insufficientShares')">Insufficient shares ({{ownedShares}} owned)</mat-error>
   </mat-form-field>
   <mat-form-field appearance="standard">
-    <span matPrefix>$ &nbsp;</span>
+    <span matPrefix>$&nbsp;</span>
     <mat-label>Price</mat-label>
     <input formControlName="executionPrice" matInput min="0" step="0.01" type="number">
   </mat-form-field>
   <mat-form-field appearance="standard">
-    <span matPrefix>$ &nbsp;</span>
+    <span matPrefix>$&nbsp;</span>
     <mat-label>Stop limit price</mat-label>
     <input formControlName="stopLimitPrice" matInput min="0" step="0.01" type="number">
   </mat-form-field>
