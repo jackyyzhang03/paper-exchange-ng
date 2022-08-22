@@ -3,14 +3,15 @@ import { HttpClient } from '@angular/common/http';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
 import { Holding } from '../components/portfolio/portfolio.component';
 import {
+  BehaviorSubject,
   map,
   mergeMap,
   Observable,
-  ReplaySubject,
   Subscription,
   tap,
 } from 'rxjs';
 import { PriceService } from '../services/price.service';
+import { SortDirection } from '@angular/material/sort';
 
 type HoldingDto = { symbol: string, shares: number, adjustedCostBase: number }
 
@@ -32,33 +33,24 @@ export type Page<T> = {
   providedIn: 'root',
 })
 export class PortfolioDataSource implements DataSource<Holding> {
-  private subject = new ReplaySubject<Holding[]>(1);
+  private subject = new BehaviorSubject<Holding[]>([]);
   private holdings: Holding[] = [];
   private priceSubscription: Subscription | undefined;
-  private totalElements = 0;
   public pageIndex = 0;
   public pageSize = 10;
+  public sortName: keyof Holding = 'symbol';
+  public sortDirection: SortDirection = 'asc';
 
   constructor(private http: HttpClient, private priceService: PriceService) {}
 
-  getHoldings(pageIndex: number, pageSize: number) {
-    return this.http.get<Page<HoldingDto>>(
-      'http://localhost:8080/portfolio',
-      { params: { page: pageIndex, size: pageSize } });
+  getHoldings() {
+    return this.http.get<HoldingDto[]>('http://localhost:8080/portfolio');
   }
 
-  loadPage() {
-    this.priceSubscription?.unsubscribe();
-    this.getHoldings(this.pageIndex, this.pageSize).pipe(
-      tap((page) => this.totalElements = page.totalElements),
-      map((page) => page.content.map(dto => ({
-        symbol: dto.symbol,
-        shares: dto.shares,
-        bookValue: dto.adjustedCostBase * dto.shares,
-        marketValue: 0,
-        price: 0,
-      }))),
-      tap((holdings) => this.subject.next(this.holdings = holdings)),
+  loadPortfolio() {
+    this.priceSubscription = this.getHoldings().pipe(
+      map((holdings) => holdings.map(dtoToHolding)),
+      tap((holdings) => this.holdings = holdings),
       map((holdings) => holdings.map((dto) => dto.symbol)),
       mergeMap((symbols) => this.priceService.getPrices(symbols)),
     ).subscribe((priceUpdate) => {
@@ -67,12 +59,23 @@ export class PortfolioDataSource implements DataSource<Holding> {
       if (holding) {
         holding.marketValue = priceUpdate.p * holding.shares;
         holding.price = priceUpdate.p;
-        this.subject.next(this.holdings);
+        holding.gain = holding.marketValue - holding.bookValue;
+        holding.return = holding.gain / holding.bookValue;
+        this.sortAndPage();
       }
     });
   }
 
+  sortAndPage() {
+    this.holdings.sort(holdingComparator(this.sortName, this.sortDirection));
+    const start = this.pageIndex * this.pageSize;
+    const end = start + this.pageSize;
+    const holdings = this.holdings.slice(start, end);
+    this.subject.next(holdings);
+  }
+
   connect(collectionViewer: CollectionViewer): Observable<Holding[]> {
+    this.loadPortfolio();
     return this.subject.asObservable();
   }
 
@@ -86,6 +89,33 @@ export class PortfolioDataSource implements DataSource<Holding> {
   }
 
   length() {
-    return this.totalElements;
+    return this.holdings.length;
+  }
+}
+
+function dtoToHolding(dto: HoldingDto) {
+  return {
+    symbol: dto.symbol,
+    shares: dto.shares,
+    bookValue: dto.adjustedCostBase * dto.shares,
+    marketValue: 0,
+    price: 0,
+    gain: 0,
+    return: 0,
+  };
+}
+
+function holdingComparator(sortName: keyof Holding, direction: 'asc' | 'desc' | '') {
+  const ascending = direction !== 'desc';
+  return (a: Holding, b: Holding) => {
+    const x = a[sortName];
+    const y = b[sortName];
+    if (typeof x === 'number' && typeof y === 'number') {
+      return ascending ? x - y : y - x;
+    } else if (typeof x === 'string' && typeof y === 'string') {
+      return ascending ? x.localeCompare(y) : y.localeCompare(x);
+    } else {
+      throw new Error('Arguments must be of the same type (number or string))');
+    }
   }
 }

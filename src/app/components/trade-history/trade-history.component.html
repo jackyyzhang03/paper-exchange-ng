@@ -1,24 +1,25 @@
 <mat-card>
   <mat-card-title>Trade History</mat-card-title>
-  <table [dataSource]="dataSource" mat-table>
+  <table [dataSource]="dataSource" mat-table matSort matSortDisableClear [matSortActive]="dataSource.sortName"
+         [matSortDirection]="dataSource.sortDirection">
     <ng-container matColumnDef="symbol">
-      <th *matHeaderCellDef mat-header-cell>Symbol</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="symbol">Symbol</th>
       <td *matCellDef="let trade" mat-cell> {{trade.symbol}} </td>
     </ng-container>
     <ng-container matColumnDef="type">
-      <th *matHeaderCellDef mat-header-cell>Type</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="type">Type</th>
       <td *matCellDef="let trade" mat-cell>{{trade.type | titlecase}} </td>
     </ng-container>
     <ng-container matColumnDef="shares">
-      <th *matHeaderCellDef mat-header-cell>Shares</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="shares">Shares</th>
       <td *matCellDef="let trade" mat-cell>{{trade.shares}} </td>
     </ng-container>
     <ng-container matColumnDef="price">
-      <th *matHeaderCellDef mat-header-cell>Price</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="price">Price</th>
       <td *matCellDef="let trade" mat-cell>{{trade.price | currency}} </td>
     </ng-container>
     <ng-container matColumnDef="time">
-      <th *matHeaderCellDef mat-header-cell>Time Executed</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="time">Time Executed</th>
       <td *matCellDef="let trade" mat-cell>{{trade.time | date:'medium'}} </td>
     </ng-container>
     <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
@@ -28,5 +29,5 @@
     </tr>
   </table>
   <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
-                 [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)"></mat-paginator>
+                 [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </mat-card>

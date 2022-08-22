@@ -46,6 +46,7 @@ import {
   EmailVerificationComponent,
 } from '../components/email-verification/email-verification.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -82,6 +83,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     MatListModule,
     MatAutocompleteModule,
     MatPaginatorModule,
+    MatSortModule,
   ],
   providers: [
     {

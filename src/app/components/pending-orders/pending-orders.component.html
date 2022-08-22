@@ -1,28 +1,29 @@
 <mat-card>
   <mat-card-title>Pending Orders</mat-card-title>
-  <table [dataSource]="dataSource" mat-table>
+  <table [dataSource]="dataSource" mat-table matSort matSortDisableClear [matSortActive]="dataSource.sortName"
+         [matSortDirection]="dataSource.sortDirection">
     <ng-container matColumnDef="symbol">
-      <th *matHeaderCellDef mat-header-cell>Symbol</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="symbol">Symbol</th>
       <td *matCellDef="let order" mat-cell> {{order.symbol}} </td>
     </ng-container>
     <ng-container matColumnDef="buyOrSell">
-      <th *matHeaderCellDef mat-header-cell>Type</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="sell">Type</th>
       <td *matCellDef="let order" mat-cell>{{order.sell ? 'Sell' : 'Buy'}} </td>
     </ng-container>
     <ng-container matColumnDef="type">
-      <th *matHeaderCellDef mat-header-cell>Order Type</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="type">Order Type</th>
       <td *matCellDef="let order" mat-cell>{{order.type | enum | titlecase}} </td>
     </ng-container>
     <ng-container matColumnDef="shares">
-      <th *matHeaderCellDef mat-header-cell>Shares</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="shares">Shares</th>
       <td *matCellDef="let order" mat-cell>{{order.shares}} </td>
     </ng-container>
     <ng-container matColumnDef="executionPrice">
-      <th *matHeaderCellDef mat-header-cell>Execution Price</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="executionPrice">Execution Price</th>
       <td *matCellDef="let order" mat-cell>{{order.type !== 'MARKET' ? (order.executionPrice | currency) : '-'}} </td>
     </ng-container>
     <ng-container matColumnDef="stopLimitPrice">
-      <th *matHeaderCellDef mat-header-cell>Stop Limit Price</th>
+      <th *matHeaderCellDef mat-header-cell mat-sort-header="stopLimitPrice">Stop Limit Price</th>
       <td *matCellDef="let order" mat-cell>{{order.type === 'STOP_LIMIT' ?
         (order.stopLimitPrice | currency) :
         '-'}} </td>
@@ -42,5 +43,5 @@
     </tr>
   </table>
   <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
-                 [pageSizeOptions]="pageSizeOptions" (page)="handlePageEvent($event)"></mat-paginator>
+                 [pageSizeOptions]="pageSizeOptions"></mat-paginator>
 </mat-card>
