@@ -10,12 +10,12 @@ import { SortDirection } from '@angular/material/sort';
   providedIn: 'root',
 })
 export class TradeHistoryDataSource implements DataSource<Trade> {
-  private subject = new Subject<Trade[]>();
-  private totalElements = 0;
   public pageIndex = 0;
   public pageSize = 10;
   public sortName = 'time';
   public sortDirection: SortDirection = 'desc';
+  private subject = new Subject<Trade[]>();
+  private totalElements = 0;
 
   constructor(private http: HttpClient) { }
 

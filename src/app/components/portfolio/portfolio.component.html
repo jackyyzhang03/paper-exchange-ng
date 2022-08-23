@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Portfolio</mat-card-title>
-  <table [dataSource]="dataSource" mat-table matSort matSortDisableClear [matSortActive]="dataSource.sortName"
-         [matSortDirection]="dataSource.sortDirection">
+  <table [dataSource]="dataSource" [matSortActive]="dataSource.sortName" [matSortDirection]="dataSource.sortDirection" mat-table matSort
+         matSortDisableClear>
     <ng-container matColumnDef="symbol">
       <th *matHeaderCellDef mat-header-cell mat-sort-header>Symbol</th>
       <td *matCellDef="let holding" mat-cell> {{holding.symbol}} </td>
@@ -36,6 +36,6 @@
       <td [colSpan]="displayedColumns.length" class="mat-cell">Empty portfolio</td>
     </tr>
   </table>
-  <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
-                 [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+  <mat-paginator [length]="dataSource.length()" [pageIndex]="dataSource.pageIndex" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]="dataSource.pageSize"></mat-paginator>
 </mat-card>

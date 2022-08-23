@@ -10,12 +10,12 @@ import { SortDirection } from '@angular/material/sort';
   providedIn: 'root',
 })
 export class OrderDataSource implements DataSource<Order> {
-  private subject = new Subject<Order[]>();
-  private totalElements = 0;
   public pageIndex = 0;
   public pageSize = 10;
   public sortName = 'symbol';
   public sortDirection: SortDirection = 'asc';
+  private subject = new Subject<Order[]>();
+  private totalElements = 0;
 
   constructor(private http: HttpClient) { }
 

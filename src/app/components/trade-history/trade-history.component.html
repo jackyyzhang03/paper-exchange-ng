@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-title>Trade History</mat-card-title>
-  <table [dataSource]="dataSource" mat-table matSort matSortDisableClear [matSortActive]="dataSource.sortName"
-         [matSortDirection]="dataSource.sortDirection">
+  <table [dataSource]="dataSource" [matSortActive]="dataSource.sortName" [matSortDirection]="dataSource.sortDirection" mat-table matSort
+         matSortDisableClear>
     <ng-container matColumnDef="symbol">
       <th *matHeaderCellDef mat-header-cell mat-sort-header="symbol">Symbol</th>
       <td *matCellDef="let trade" mat-cell> {{trade.symbol}} </td>
@@ -28,6 +28,6 @@
       <td [colSpan]="displayedColumns.length" class="mat-cell">No previous trades</td>
     </tr>
   </table>
-  <mat-paginator [pageIndex]="dataSource.pageIndex" [pageSize]="dataSource.pageSize" [length]="dataSource.length()"
-                 [pageSizeOptions]="pageSizeOptions"></mat-paginator>
+  <mat-paginator [length]="dataSource.length()" [pageIndex]="dataSource.pageIndex" [pageSizeOptions]="pageSizeOptions"
+                 [pageSize]="dataSource.pageSize"></mat-paginator>
 </mat-card>

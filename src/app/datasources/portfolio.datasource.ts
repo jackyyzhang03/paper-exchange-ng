@@ -33,13 +33,13 @@ export type Page<T> = {
   providedIn: 'root',
 })
 export class PortfolioDataSource implements DataSource<Holding> {
-  private subject = new BehaviorSubject<Holding[]>([]);
-  private holdings: Holding[] = [];
-  private priceSubscription: Subscription | undefined;
   public pageIndex = 0;
   public pageSize = 10;
   public sortName: keyof Holding = 'symbol';
   public sortDirection: SortDirection = 'asc';
+  private subject = new BehaviorSubject<Holding[]>([]);
+  private holdings: Holding[] = [];
+  private priceSubscription: Subscription | undefined;
 
   constructor(private http: HttpClient, private priceService: PriceService) {}
 
@@ -105,7 +105,8 @@ function dtoToHolding(dto: HoldingDto) {
   };
 }
 
-function holdingComparator(sortName: keyof Holding, direction: 'asc' | 'desc' | '') {
+function holdingComparator(
+  sortName: keyof Holding, direction: 'asc' | 'desc' | '') {
   const ascending = direction !== 'desc';
   return (a: Holding, b: Holding) => {
     const x = a[sortName];
@@ -117,5 +118,5 @@ function holdingComparator(sortName: keyof Holding, direction: 'asc' | 'desc' | 
     } else {
       throw new Error('Arguments must be of the same type (number or string))');
     }
-  }
+  };
 }
