@@ -47,6 +47,10 @@ import {
 } from '../components/email-verification/email-verification.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import {
+  OhlcChartComponent,
+} from '../components/ohlc-chart/ohlc-chart.component';
+import { ChartModule } from 'angular-highcharts';
 
 @NgModule({
   declarations: [
@@ -62,6 +66,7 @@ import { MatSortModule } from '@angular/material/sort';
     TradeHistoryComponent,
     EmailVerificationComponent,
     EnumPipe,
+    OhlcChartComponent,
   ],
   imports: [
     BrowserModule,
@@ -84,6 +89,7 @@ import { MatSortModule } from '@angular/material/sort';
     MatAutocompleteModule,
     MatPaginatorModule,
     MatSortModule,
+    ChartModule,
   ],
   providers: [
     {

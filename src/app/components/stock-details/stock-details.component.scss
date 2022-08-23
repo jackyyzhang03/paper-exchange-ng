@@ -1,10 +1,33 @@
 mat-card {
-  max-width: 400px;
-  margin: 2em auto;
+  margin: 2em;
 }
 
 .price {
   font-size: 2em;
   font-weight: bold;
   line-height: 2em;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .heading {
+    margin: 10px auto auto 10px;
+  }
+
+  div {
+    display: block;
+    margin-right: 38px;
+  }
+}
+
+.mat-flat-button {
+  margin: 10px auto auto 10px;
+}
+
+mat-card-title {
+  margin-bottom: 0;
 }

@@ -1,5 +1,17 @@
 <mat-card>
-  <mat-card-title>{{symbol}}</mat-card-title>
-  <p class="price">{{price | currency}}</p>
+  <div class="row">
+    <div class="heading">
+      <mat-card-title>{{symbol}}</mat-card-title>
+      <p class="price">{{price | currency}}</p>
+    </div>
+    <div class="toggles">
+      <mat-button-toggle-group (change)="handleToggle($event)">
+        <mat-button-toggle *ngFor="let range of ranges; let i = index" [checked]="range === selected"
+                           [value]="i">{{range.label}}</mat-button-toggle>
+      </mat-button-toggle-group>
+    </div>
+  </div>
+  <app-ohlc-chart [number]="selected.number" [resolution]="selected.resolution" [symbol]="symbol"
+                  [unit]="selected.unit"></app-ohlc-chart>
   <button (click)="openDialog()" color="primary" mat-flat-button>Trade</button>
 </mat-card>
