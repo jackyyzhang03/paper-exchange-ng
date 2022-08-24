@@ -45,7 +45,8 @@ export class PortfolioDataSource implements DataSource<Holding> {
   constructor(private http: HttpClient, private priceService: PriceService) {}
 
   getHoldings() {
-    return this.http.get<HoldingDto[]>(`http://${environment.apiUrl}/portfolio`);
+    return this.http.get<HoldingDto[]>(
+      `http://${environment.apiUrl}/portfolio`);
   }
 
   loadPortfolio() {

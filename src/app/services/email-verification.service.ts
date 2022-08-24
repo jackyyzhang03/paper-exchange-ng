@@ -15,6 +15,7 @@ export class EmailVerificationService {
   }
 
   public resendEmail() {
-    return this.http.get(`http://${environment.apiUrl}/auth/verification-email`);
+    return this.http.get(
+      `http://${environment.apiUrl}/auth/verification-email`);
   }
 }

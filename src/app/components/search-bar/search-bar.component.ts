@@ -28,7 +28,8 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     firstValueFrom(
-      this.http.get<{ symbols: string[] }>(`http://${environment.apiUrl}/symbols`)).
+      this.http.get<{ symbols: string[] }>(
+        `http://${environment.apiUrl}/symbols`)).
       then(data => this.options = data.symbols).
       then(() => this.options.sort());
     this.filteredOptions = this.formGroup.controls.ticker.valueChanges.pipe(

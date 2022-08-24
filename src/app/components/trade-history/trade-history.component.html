@@ -1,6 +1,7 @@
 <mat-card>
   <mat-card-title>Trade History</mat-card-title>
-  <table [dataSource]="dataSource" [matSortActive]="dataSource.sortName" [matSortDirection]="dataSource.sortDirection" mat-table matSort
+  <table [dataSource]="dataSource" [matSortActive]="dataSource.sortName" [matSortDirection]="dataSource.sortDirection"
+         mat-table matSort
          matSortDisableClear>
     <ng-container matColumnDef="symbol">
       <th *matHeaderCellDef mat-header-cell mat-sort-header="symbol">Symbol</th>
