@@ -13,12 +13,12 @@ import {
 import {
   TradeHistoryComponent,
 } from '../components/trade-history/trade-history.component';
-import { AuthGuard } from '../services/auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { RegisterComponent } from '../components/register/register.component';
 import {
   EmailVerificationComponent,
 } from '../components/email-verification/email-verification.component';
-import { VerifiedGuard } from '../services/verified.guard';
+import { VerifiedGuard } from '../guards/verified.guard';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent, canActivate: [AuthGuard] },

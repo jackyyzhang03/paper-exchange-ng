@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LoginComponent } from '../components/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthInterceptor } from '../services/auth.interceptor';
+import { AuthInterceptor } from '../interceptors/auth.interceptor';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -40,7 +40,7 @@ import {
 import {
   TradeHistoryComponent,
 } from '../components/trade-history/trade-history.component';
-import { EnumPipe } from '../services/enum.pipe';
+import { EnumPipe } from '../pipes/enum.pipe';
 import { RegisterComponent } from '../components/register/register.component';
 import {
   EmailVerificationComponent,
