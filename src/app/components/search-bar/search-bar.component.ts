@@ -3,6 +3,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { firstValueFrom, map, Observable, startWith } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-search-bar',
@@ -27,7 +28,7 @@ export class SearchBarComponent implements OnInit {
 
   ngOnInit(): void {
     firstValueFrom(
-      this.http.get<{ symbols: string[] }>('http://localhost:8080/symbols')).
+      this.http.get<{ symbols: string[] }>(`http://${environment.apiUrl}/symbols`)).
       then(data => this.options = data.symbols).
       then(() => this.options.sort());
     this.filteredOptions = this.formGroup.controls.ticker.valueChanges.pipe(

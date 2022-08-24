@@ -12,6 +12,7 @@ import {
 } from 'rxjs';
 import { PriceService } from '../services/price.service';
 import { SortDirection } from '@angular/material/sort';
+import { environment } from '../../environments/environment';
 
 type HoldingDto = { symbol: string, shares: number, adjustedCostBase: number }
 
@@ -44,7 +45,7 @@ export class PortfolioDataSource implements DataSource<Holding> {
   constructor(private http: HttpClient, private priceService: PriceService) {}
 
   getHoldings() {
-    return this.http.get<HoldingDto[]>('http://localhost:8080/portfolio');
+    return this.http.get<HoldingDto[]>(`http://${environment.apiUrl}/portfolio`);
   }
 
   loadPortfolio() {
@@ -85,7 +86,7 @@ export class PortfolioDataSource implements DataSource<Holding> {
 
   getHolding(symbol: string) {
     return this.http.get<Holding>(
-      `http://localhost:8080/portfolio/holdings/${symbol}`);
+      `http://${environment.apiUrl}/portfolio/holdings/${symbol}`);
   }
 
   length() {

@@ -5,6 +5,7 @@ import { Order } from '../components/pending-orders/pending-orders.component';
 import { Observable, Subject, tap } from 'rxjs';
 import { Page } from './portfolio.datasource';
 import { SortDirection } from '@angular/material/sort';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class OrderDataSource implements DataSource<Order> {
   }
 
   poll() {
-    this.http.get<Page<Order>>('http://localhost:8080/orders',
+    this.http.get<Page<Order>>(`http://${environment.apiUrl}/orders`,
       {
         params: {
           page: this.pageIndex,

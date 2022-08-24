@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Trade } from '../components/trade-history/trade-history.component';
 import { Page } from './portfolio.datasource';
 import { SortDirection } from '@angular/material/sort';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +29,7 @@ export class TradeHistoryDataSource implements DataSource<Trade> {
   }
 
   poll() {
-    this.http.get<Page<Trade>>('http://localhost:8080/trades',
+    this.http.get<Page<Trade>>(`http://${environment.apiUrl}/trades`,
       {
         params: {
           page: this.pageIndex,

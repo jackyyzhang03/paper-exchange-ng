@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Params, Router } from '@angular/router';
 import { tap } from 'rxjs';
+import { environment } from '../../environments/environment';
 
 type User = {
   email: string;
@@ -18,7 +19,7 @@ type UserLoginDto = {
   providedIn: 'root',
 })
 export class AuthService {
-  private readonly authEndpoint = 'http://localhost:8080/auth';
+  private readonly authEndpoint = `http://${environment.apiUrl}/auth`;
   private authenticated = false;
   private user: User | null = null;
   private expiry: Date | null = null;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 type Order = {
   symbol: string;
@@ -18,10 +19,10 @@ export class OrderService {
   constructor(private http: HttpClient) { }
 
   postOrder(order: Order) {
-    return this.http.post('http://localhost:8080/orders', order);
+    return this.http.post(`http://${environment.apiUrl}/orders`, order);
   }
 
   deleteOrderById(id: number) {
-    return this.http.delete(`http://localhost:8080/orders/${id}`);
+    return this.http.delete(`http://${environment.apiUrl}/orders/${id}`);
   }
 }
